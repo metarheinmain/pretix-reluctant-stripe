@@ -1,0 +1,8 @@
+{% load staticfiles %}
+{% load compress %}
+{% load i18n %}
+
+{% compress js %}
+    <script type="text/javascript" src="{% static "pretix_reluctant_stripe/stripe-reluctant.js" %}"></script>
+{% endcompress %}
+
