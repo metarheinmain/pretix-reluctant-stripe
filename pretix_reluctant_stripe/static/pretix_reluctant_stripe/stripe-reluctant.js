@@ -46,6 +46,9 @@ $(function () {
         $("input[name=payment][value=banktransfer]").prop("checked", true).trigger('change');
         return true;
     });
+    $(".stripe-reluctant-choice input").change(function (e) {
+        $(".stripe-reluctant-ignore").prop("disabled", false);
+    });
 
     $(".stripe-reluctant-body").hide();
 });

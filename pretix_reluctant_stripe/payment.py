@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 import logging
 from collections import OrderedDict
 
@@ -26,15 +28,42 @@ class ReluctantStripeCC(StripeCC):
         ])
 
     @property
+    def payment_form_fields(self):
+        return OrderedDict([
+            ('pay_fees',
+             forms.ChoiceField(
+                 label=_('Pay fees yourself'),
+                 choices=(
+                     ('yes', 'Yes, that\'s alright. Just add it to the bill!'),
+                     ('no', _('I\'d rather not, please pay the fees for me.'))
+                 ),
+                 required=False,
+                 widget=forms.RadioSelect
+             )),
+        ])
+
+    @property
     def is_enabled(self) -> bool:
         return self.settings.get('_reluctant_enabled', as_type=bool)
 
-    def payment_form_render(self, request) -> str:
-        ui = self.settings.get('ui', default='pretix')
+    def payment_form_render(self, request, total) -> str:
         template = get_template('pretix_reluctant_stripe/checkout_payment_form.html')
+        max_stripe_fee = Decimal('0.25') + Decimal('.029') * total
+        form = self.payment_form(request)
         ctx = {
             'request': request,
             'event': self.event,
+            'form': form,
             'settings': self.settings,
+            'fee': max_stripe_fee
         }
         return template.render(ctx)
+
+    def checkout_prepare(self, request, cart):
+        form = self.payment_form(request)
+        if form.is_valid():
+            for k, v in form.cleaned_data.items():
+                request.session['payment_%s_%s' % (self.identifier, k)] = v
+            return super().checkout_prepare(request, cart)
+        else:
+            return False

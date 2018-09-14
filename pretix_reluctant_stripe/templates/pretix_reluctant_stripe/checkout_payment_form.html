@@ -1,6 +1,8 @@
 {% load i18n %}
+{% load money %}
+{% load bootstrap3 %}
 
-<div class="form-horizontal stripe-container">
+<div class="stripe-container">
     <div class="stripe-errors sr-only">
 
     </div>
@@ -11,33 +13,39 @@
     </noscript>
 
     <div class="stripe-reluctant-warning">
-        <p>
-            {% blocktrans trimmed %}
-                If you pay by card, a <strong>percentage of the ticket price</strong> goes
-                to the credit card companies instead of us. We would prefer
-                if we could use the full ticket price to create a great
-                conference instead.
+        <p class="larger">
+            {% blocktrans trimmed with fee=fee|money:event.currency %}
+                If you pay this transaction by card, approx. <strong>{{ fee }}</strong> goes to the credit card
+                companies instead of us.
             {% endblocktrans %}
         </p>
         <p>
             {% blocktrans trimmed %}
-                If it's possible for you at all,
-                <strong>please consider paying by SEPA transfer instead</strong>.
-                It doesn't cost us anything and therefore allows us to keep
-                the ticket prices low in the long term.
-                It's more privacy-friendly, as well.
+                Normally, this would force us to increase the ticket prices further for everyone. We'd rather
+                keep ticket prices low, so we ask you to <strong>reconsider paying by SEPA transfer</strong>.
             {% endblocktrans %}
         </p>
         <p>
             <button class="stripe-reluctant-okay btn btn-success">
-                {% trans "You're right, let's do a bank transfer" %}
+                {% trans "Let's do a bank transfer, then" %}
             </button>
-            <button class="stripe-reluctant-ignore btn btn-default">
-                {% trans "Nah, I really need to use credit card" %}
+        </p>
+        <p>
+            {% blocktrans trimmed %}
+                If you really need to pay by card, we'd be very happy if you voluntarily take over
+                the credit card processing fees.
+            {% endblocktrans %}
+        </p>
+        <div class="stripe-reluctant-choice">
+            {% bootstrap_field form.pay_fees layout='inline' form_group_class='' field_class='helper-display-block' label_class='sr-only' %}
+        </div>
+        <p>
+            <button class="stripe-reluctant-ignore btn btn-primary" disabled>
+                {% trans "Continue with card payment" %}
             </button>
         </p>
     </div>
-    <div class="stripe-reluctant-body">
+    <div class="form-horizontal stripe-reluctant-body">
 
         {% if request.session.payment_stripe_token %}
             <div id="stripe-current-card">
