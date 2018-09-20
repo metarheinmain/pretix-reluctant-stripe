@@ -4,9 +4,11 @@ import logging
 from collections import OrderedDict
 
 from django import forms
+from django.db.models import Sum
 from django.template.loader import get_template
 from django.utils.translation import ugettext_lazy as _
 
+from pretix.base.models import OrderFee, InvoiceAddress
 from pretix.plugins.stripe.payment import StripeCC
 
 logger = logging.getLogger(__name__)
@@ -67,3 +69,26 @@ class ReluctantStripeCC(StripeCC):
             return super().checkout_prepare(request, cart)
         else:
             return False
+
+    def payment_prepare(self, request, payment):
+        from .signals import get_fee
+
+        payment.order.fees.filter(fee_type=OrderFee.FEE_TYPE_PAYMENT).delete()
+        if request.POST.get('payment_stripe_cc_reluctant-pay_fees', 'no') == 'yes':
+            try:
+                fee = get_fee(self.event, payment.order.total, payment.order.invoice_address)
+            except InvoiceAddress.DoesNotExist:
+                fee = get_fee(self.event, payment.order.total, None)
+
+            fee.order = payment.order
+            fee._calculate_tax()
+            if fee.tax_rule and not fee.tax_rule.pk:
+                fee.tax_rule = None
+            fee.save()
+        payment.order.total = (
+            (payment.order.positions.aggregate(sum=Sum('price'))['sum'] or 0) +
+            (payment.order.fees.aggregate(sum=Sum('value'))['sum'] or 0)
+        )
+        payment.amount = payment.order.pending_sum
+        payment.save(update_fields=['amount'])
+        return self.checkout_prepare(request, None)

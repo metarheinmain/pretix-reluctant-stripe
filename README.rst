@@ -1,7 +1,9 @@
-Stripe plugin (reluctant to work)
-==========================
+Stripe plugin (reluctant to do its job)
+=======================================
 
-This is a plugin for `pretix`_. 
+This is a plugin for `pretix`_.
+
+**This is very hacky. Use at own risk.**
 
 Development setup
 -----------------

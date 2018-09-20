@@ -53,7 +53,6 @@ def get_fee(event, total, invoice_address):
         )
 
 
-
 @receiver(fee_calculation_for_cart, dispatch_uid="payment_stripe_reluctant_fee_calc_cart")
 def cart_fee(sender: Event, request: HttpRequest, total: Decimal, invoice_address, **kwargs):
     cs = cart_session(request)
