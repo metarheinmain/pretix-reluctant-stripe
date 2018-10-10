@@ -36,7 +36,7 @@ class ReluctantStripeCC(StripeCC):
              forms.ChoiceField(
                  label=_('Pay fees yourself'),
                  choices=(
-                     ('yes', 'Yes, that\'s alright. Just add it to the bill!'),
+                     ('yes', _('Yes, that\'s alright. Just add it to the bill!')),
                      ('no', _('I\'d rather not, please pay the fees for me.'))
                  ),
                  required=False,

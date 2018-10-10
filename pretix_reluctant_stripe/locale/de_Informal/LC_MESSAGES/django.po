@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-10 18:35+0200\n"
+"POT-Creation-Date: 2018-10-10 19:26+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Team MRMCD\n"
 "Language-Team: \n"
@@ -31,6 +31,10 @@ msgstr "Aktiviere Zahlungsmethode"
 #: pretix_reluctant_stripe/payment.py:37
 msgid "Pay fees yourself"
 msgstr "Gebühren selbst zahlen"
+
+#: pretix_reluctant_stripe/payment.py:39
+msgid "Yes, that's alright. Just add it to the bill!"
+msgstr "Na klar, das übernehm ich gern!"
 
 #: pretix_reluctant_stripe/payment.py:40
 msgid "I'd rather not, please pay the fees for me."
