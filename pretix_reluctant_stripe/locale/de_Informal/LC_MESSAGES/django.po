@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-10 14:18+0200\n"
+"POT-Creation-Date: 2018-10-10 18:35+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Team MRMCD\n"
 "Language-Team: \n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.0.8\n"
 
 #: pretix_reluctant_stripe/__init__.py:10
 msgid "Stripe plugin (reluctant to work)"
@@ -18,54 +18,66 @@ msgstr "Stripe-Plugin (das sich etwas ziert)"
 
 #: pretix_reluctant_stripe/__init__.py:12
 msgid "Short description"
-msgstr ""
+msgstr "Kurzbeschreibung"
 
-#: pretix_reluctant_stripe/payment.py:16
+#: pretix_reluctant_stripe/payment.py:20
 msgid "Stripe Credit Card (reluctant)"
 msgstr "Kreditkarte via Stripe (unfreiwillig)"
 
-#: pretix_reluctant_stripe/payment.py:23
+#: pretix_reluctant_stripe/payment.py:27
 msgid "Enable payment method"
 msgstr "Aktiviere Zahlungsmethode"
 
-#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:9
+#: pretix_reluctant_stripe/payment.py:37
+msgid "Pay fees yourself"
+msgstr "Gebühren selbst zahlen"
+
+#: pretix_reluctant_stripe/payment.py:40
+msgid "I'd rather not, please pay the fees for me."
+msgstr "Lieber nicht, bitte zahlt das für mich"
+
+#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:11
 msgid "For a credit card payment, please turn on JavaScript."
 msgstr ""
 "Bitte aktiviere JavaScript in deinem Browser, um mit Kreditkarte bezahlen zu "
 "können."
 
-#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:15
+#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:17
+#, python-format
 msgid ""
-"If you pay by card, a <strong>percentage of the ticket price</strong> goes "
-"to the credit card companies instead of us. We would prefer if we could use "
-"the full ticket price to create a great conference instead."
+"If you pay this transaction by card, approx. <strong>%(fee)s</strong> goes "
+"to the credit card companies instead of us."
 msgstr ""
-"Wenn du mit Kreditkarte zahlst, geht ein <strong>Prozentsatz vom "
-"Ticketpreis</strong> an die Kreditkartenfirmen, statt an uns. Wir würden es "
-"bevorzugen, wenn wir den vollen Ticketpreis nutzen können, um eine tolle "
-"Konferenz zu gestalten."
+"Wenn du diese Bestellung mit Karte zahlst, kostet uns das ca. <strong>"
+"%(fee)s</strong>, die an die Kreditkartenfirmen gehen, statt an uns."
 
 #: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:23
 msgid ""
-"If it's possible for you at all, <strong>please consider paying by SEPA "
-"transfer instead</strong>. It doesn't cost us anything and therefore allows "
-"us to keep the ticket prices low in the long term. It's more privacy-"
-"friendly, as well."
+"Normally, this would force us to increase the ticket prices further for "
+"everyone. We'd rather keep ticket prices low, so we ask you to "
+"<strong>reconsider paying by SEPA transfer</strong>."
 msgstr ""
-"Wenn es irgendwie möglich ist, <strong>bitten wir dich daher per "
-"Banküberweisung zu bezahlen</strong>. Das kostet uns nichts und erlaubt uns "
-"daher, die Ticketpreise auch in Zukunft niedrig zu halten und ist "
-"gleichzeitig datenschutzfreundlicher."
+"Normalerweise würde das erfordern, dass wir die Ticketpreise für alle weiter "
+"erhöhen. Wir würden die Preise lieber nicht weiter erhöhen, daher bitten wir "
+"dich, <strong>wenn möglich doch per Überweisung zu zahlen</strong>."
 
-#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:33
-msgid "You're right, let's do a bank transfer"
-msgstr "Klar, dann per Banküberweisung"
+#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:30
+msgid "Let's do a bank transfer, then"
+msgstr "Alles klar, ich überweise!"
 
-#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:36
-msgid "Nah, I really need to use credit card"
-msgstr "Nee, ich muss wirklich eine Kreditkarte nutzen"
+#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:34
+msgid ""
+"If you really need to pay by card, we'd be very happy if you voluntarily "
+"take over the credit card processing fees."
+msgstr ""
+"Wenn du wirklich mit Karte zahlen musst, wäre es toll, wenn du die "
+"Kreditkartengebühr freiwillig für uns übernimmst."
 
 #: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:44
+msgid "Continue with card payment"
+msgstr "Mit Kartenzahlung fortfahren"
+
+#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:52
 msgid ""
 "You already entered a card number that we will use to charge the payment "
 "amount."
@@ -73,19 +85,19 @@ msgstr ""
 "Du hast bereits eine Kartennummer eingegeben, die wir für die Zahlung "
 "benutzen werden."
 
-#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:48
+#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:56
 msgid "Card type"
 msgstr "Kartentyp"
 
-#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:50
+#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:58
 msgid "Card number"
 msgstr "Kreditkartennummer"
 
-#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:55
+#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:63
 msgid "Use a different card"
 msgstr "Andere Kreditkarte verwenden"
 
-#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:67
+#: pretix_reluctant_stripe/templates/pretix_reluctant_stripe/checkout_payment_form.html:75
 msgid ""
 "Your payment will be processed by Stripe, Inc. Your credit card data will be "
 "transmitted directly to Stripe and never touches our servers."
@@ -93,3 +105,27 @@ msgstr ""
 "Deine Zahlung wird durch Stripe, Inc. abgewickelt. Deine Kreditkartendaten "
 "werden direkt an Stripe übertragen und kommen nicht in Kontakt mit unseren "
 "Servern."
+
+#~ msgid ""
+#~ "If you pay by card, a <strong>percentage of the ticket price</strong> "
+#~ "goes to the credit card companies instead of us. We would prefer if we "
+#~ "could use the full ticket price to create a great conference instead."
+#~ msgstr ""
+#~ "Wenn du mit Kreditkarte zahlst, geht ein <strong>Prozentsatz vom "
+#~ "Ticketpreis</strong> an die Kreditkartenfirmen, statt an uns. Wir würden "
+#~ "es bevorzugen, wenn wir den vollen Ticketpreis nutzen können, um eine "
+#~ "tolle Konferenz zu gestalten."
+
+#~ msgid ""
+#~ "If it's possible for you at all, <strong>please consider paying by SEPA "
+#~ "transfer instead</strong>. It doesn't cost us anything and therefore "
+#~ "allows us to keep the ticket prices low in the long term. It's more "
+#~ "privacy-friendly, as well."
+#~ msgstr ""
+#~ "Wenn es irgendwie möglich ist, <strong>bitten wir dich daher per "
+#~ "Banküberweisung zu bezahlen</strong>. Das kostet uns nichts und erlaubt "
+#~ "uns daher, die Ticketpreise auch in Zukunft niedrig zu halten und ist "
+#~ "gleichzeitig datenschutzfreundlicher."
+
+#~ msgid "Nah, I really need to use credit card"
+#~ msgstr "Nee, ich muss wirklich eine Kreditkarte nutzen"
