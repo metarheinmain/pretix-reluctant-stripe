@@ -64,9 +64,12 @@ def cart_fee(sender: Event, request: HttpRequest, total: Decimal, invoice_addres
 
 @receiver(order_meta_from_request, dispatch_uid="pretix_stripe_reluctant_fee_order_meta")
 def order_meta_signal(sender: Event, request: HttpRequest, **kwargs):
-    return {
-        'pretix_stripe_reluctant_pay_fee': request.session.get('payment_%s_%s' % ('stripe_cc_reluctant', 'pay_fees')) == 'yes'
-    }
+    cs = cart_session(request)
+    if cs.get('payment') == 'stripe_cc_reluctant':
+        return {
+            'pretix_stripe_reluctant_pay_fee': request.session.get('payment_%s_%s' % ('stripe_cc_reluctant', 'pay_fees')) == 'yes'
+        }
+    return {}
 
 
 @receiver(order_fee_calculation, dispatch_uid="pretix_stripe_reluctant_fee_calc_order")
