@@ -89,6 +89,7 @@ class ReluctantStripeCC(StripeCC):
             (payment.order.positions.aggregate(sum=Sum('price'))['sum'] or 0) +
             (payment.order.fees.aggregate(sum=Sum('value'))['sum'] or 0)
         )
+        payment.order.save(update_fields=['total'])
         payment.amount = payment.order.pending_sum
         payment.save(update_fields=['amount'])
         return self.checkout_prepare(request, None)
