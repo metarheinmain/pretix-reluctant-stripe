@@ -44,6 +44,7 @@ $(function () {
         e.stopPropagation();
         $("input[name=payment][value=stripe_cc_reluctant]").prop("checked", false);
         $("input[name=payment][value=banktransfer]").prop("checked", true).trigger('change');
+        $('.stripe-container').closest("form").find(".checkout-button-row .btn-primary").prop("disabled", false);
         return true;
     });
     $(".stripe-reluctant-choice input").change(function (e) {
