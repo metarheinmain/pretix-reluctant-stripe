@@ -3,31 +3,22 @@ $(function () {
         return;
 
     if ($("input[name=payment][value=stripe_cc_reluctant]").is(':checked') || $(".payment-redo-form").length) {
-        if ($("#stripe-checkout").length) {
-            pretixstripe.load_checkout();
-        } else {
-            pretixstripe.load();
-        }
+        pretixstripe.load();
     } else {
         $("input[name=payment]").change(function () {
             if ($(this).val() === 'stripe_cc_reluctant') {
-                if ($("#stripe-checkout").length) {
-                    pretixstripe.load_checkout();
-                } else {
-                    pretixstripe.load();
-                }
+                pretixstripe.load();
             }
         })
     }
     $('.stripe-container').closest("form").submit(
         function () {
+          if ($("input[name=card_new]").length && !$("input[name=card_new]").prop('checked')) {
+            return null;
+          }
             if (($("input[name=payment][value=stripe_cc_reluctant]").prop('checked') || $("input[name=payment][type=radio]").length === 0)
-                && $("#stripe_token").val() == "") {
-                if ($("#stripe-checkout").length) {
-                    pretixstripe.show_checkout();
-                } else {
-                    pretixstripe.cc_request();
-                }
+                && $("#stripe_payment_method_id").val() == "") {
+                pretixstripe.cc_request();
                 return false;
             }
         }

@@ -56,6 +56,7 @@ class ReluctantStripeCC(StripeCC):
             'request': request,
             'event': self.event,
             'form': form,
+            'total': self._decimal_to_int(total),
             'settings': self.settings,
             'fee': max_stripe_fee
         }
