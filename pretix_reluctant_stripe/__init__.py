@@ -1,5 +1,5 @@
 from django.apps import AppConfig
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 
 
 class PluginApp(AppConfig):
@@ -7,9 +7,9 @@ class PluginApp(AppConfig):
     verbose_name = 'Stripe plugin (reluctant to work)'
 
     class PretixPluginMeta:
-        name = ugettext_lazy('Stripe plugin (reluctant to work)')
+        name = gettext_lazy('Stripe plugin (reluctant to work)')
         author = 'Team MRMCD'
-        description = ugettext_lazy('Short description')
+        description = gettext_lazy('Short description')
         visible = True
         version = '1.0.0'
 
