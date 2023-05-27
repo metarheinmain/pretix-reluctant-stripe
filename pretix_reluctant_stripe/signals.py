@@ -60,7 +60,7 @@ def get_fee(event, total, invoice_address):
 @receiver(fee_calculation_for_cart, dispatch_uid="payment_stripe_reluctant_fee_calc_cart")
 def cart_fee(sender: Event, request: HttpRequest, total: Decimal, invoice_address, **kwargs):
     cs = cart_session(request)
-    for p in cs['payments']:
+    for p in cs.get('payments', []):
         if p.get('provider') == 'stripe_cc_reluctant' and total > 0:
             if request.session.get('payment_%s_%s' % ('stripe_cc_reluctant', 'pay_fees')) == 'yes':
                 return [get_fee(sender, total, invoice_address)]
@@ -70,7 +70,7 @@ def cart_fee(sender: Event, request: HttpRequest, total: Decimal, invoice_addres
 @receiver(order_meta_from_request, dispatch_uid="pretix_stripe_reluctant_fee_order_meta")
 def order_meta_signal(sender: Event, request: HttpRequest, **kwargs):
     cs = cart_session(request)
-    for p in cs['payments']:
+    for p in cs.get('payments', []):
         if p.get('provider') == 'stripe_cc_reluctant':
             return {
                 'pretix_stripe_reluctant_pay_fee': request.session.get('payment_%s_%s' % ('stripe_cc_reluctant', 'pay_fees')) == 'yes'
