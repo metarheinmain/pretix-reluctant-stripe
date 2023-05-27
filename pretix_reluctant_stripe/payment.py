@@ -3,6 +3,7 @@ from collections import OrderedDict
 from decimal import Decimal
 
 from django import forms
+from django.db import transaction
 from django.db.models import Sum
 from django.template.loader import get_template
 from django.utils.translation import gettext_lazy as _
@@ -70,6 +71,7 @@ class ReluctantStripeCC(StripeCC):
         else:
             return False
 
+    @transaction.atomic()
     def payment_prepare(self, request, payment):
         from .signals import get_fee
 
@@ -85,6 +87,7 @@ class ReluctantStripeCC(StripeCC):
             if fee.tax_rule and not fee.tax_rule.pk:
                 fee.tax_rule = None
             fee.save()
+        payment.order.create_transactions()
         payment.order.total = (
             (payment.order.positions.aggregate(sum=Sum('price'))['sum'] or 0) +
             (payment.order.fees.aggregate(sum=Sum('value'))['sum'] or 0)
