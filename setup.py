@@ -5,7 +5,6 @@ from django.core import management
 from setuptools import setup, find_packages
 from pretix_reluctant_stripe import __version__
 
-
 try:
     with open(os.path.join(os.path.dirname(__file__), 'README.rst'), encoding='utf-8') as f:
         long_description = f.read()

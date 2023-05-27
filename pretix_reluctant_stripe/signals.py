@@ -4,13 +4,17 @@ from django.dispatch import receiver
 from django.http import HttpRequest
 from django.template.loader import get_template
 from django.urls import resolve
-
 from pretix.base.decimal import round_decimal
-from pretix.base.models import Event, TaxRule, OrderFee
+from pretix.base.models import Event, OrderFee, TaxRule
 from pretix.base.services.cart import get_fees
-from pretix.base.signals import register_payment_providers, order_fee_calculation
-from pretix.presale.signals import html_head, fee_calculation_for_cart, order_meta_from_request
+from pretix.base.signals import (
+    order_fee_calculation, register_payment_providers,
+)
+from pretix.presale.signals import (
+    fee_calculation_for_cart, html_head, order_meta_from_request,
+)
 from pretix.presale.views.cart import cart_session
+
 from .payment import ReluctantStripeCC
 
 
