@@ -17,8 +17,8 @@ $(function () {
             return null;
           }
             if (($("input[name=payment][value=stripe_cc_reluctant]").prop('checked') || $("input[name=payment][type=radio]").length === 0)
-                && $("#stripe_payment_method_id").val() == "") {
-                pretixstripe.cc_request();
+                && $("#stripe_card_payment_method_id").val() == "") {
+                pretixstripe.pm_request('card', pretixstripe.card);
                 return false;
             }
         }
