@@ -13,6 +13,7 @@ class PluginApp(AppConfig):
         description = gettext_lazy('Short description')
         visible = True
         version = __version__
+        compatibility = "pretix>=2023.7.0.dev0"
 
     def ready(self):
         from . import signals  # NOQA
