@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 class ReluctantStripeCC(StripeCC):
-    method = 'cc_reluctant'
+    method = 'card'
     identifier = 'stripe_cc_reluctant'
     verbose_name = _('Stripe Credit Card (reluctant)')
 
