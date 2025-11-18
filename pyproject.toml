@@ -1,0 +1,42 @@
+[project]
+name = "pretix-reluctant-stripe"
+dynamic = ["version"]
+description = "Short description"
+readme = "README.rst"
+license = {text = "Apache Software License"}
+keywords = ["pretix"]
+authors = [
+    {name = "Team MRMCD", email = "popcorn@mrmcd.net"},
+]
+maintainers = [
+    {name = "Team MRMCD", email = "popcorn@mrmcd.net"},
+]
+
+dependencies = [
+]
+
+[project.entry-points."pretix.plugin"]
+pretix_reluctant_stripe = "pretix_reluctant_stripe:PretixPluginMeta"
+
+[project.entry-points."distutils.commands"]
+build = "pretix_plugin_build.build:CustomBuild"
+
+[build-system]
+requires = [
+    "setuptools",
+    "pretix-plugin-build",
+]
+
+[project.urls]
+homepage = "https://github.com/metarheinmain/pretix-reluctant-stripe"
+repository = "https://github.com/metarheinmain/pretix-reluctant-stripe"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = {attr = "pretix_reluctant_stripe.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["pretix*"]
+namespaces = false
