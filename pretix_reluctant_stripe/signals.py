@@ -37,11 +37,12 @@ def html_head_presale(sender, request=None, **kwargs):
 
 def get_fee(event, total, invoice_address):
     payment_fee = round_decimal(Decimal('0.25') + Decimal('0.029') * total)
-    payment_fee_tax_rule = event.settings.tax_rate_default or TaxRule.zero()
+    payment_fee_tax_rule = event.cached_default_tax_rule or TaxRule.zero()
     if payment_fee_tax_rule.tax_rate_for(invoice_address) != Decimal('0.00'):
         payment_fee_tax = payment_fee_tax_rule.tax(payment_fee, base_price_is='gross')
         return OrderFee(
-            fee_type=OrderFee.FEE_TYPE_PAYMENT,
+            fee_type=OrderFee.FEE_TYPE_SERVICE,
+            internal_type="stripe",
             value=payment_fee,
             tax_rate=payment_fee_tax.rate,
             tax_value=payment_fee_tax.tax,
@@ -49,7 +50,8 @@ def get_fee(event, total, invoice_address):
         )
     else:
         return OrderFee(
-            fee_type=OrderFee.FEE_TYPE_PAYMENT,
+            fee_type=OrderFee.FEE_TYPE_SERVICE,
+            internal_type="stripe",
             value=payment_fee,
             tax_rate=Decimal('0.00'),
             tax_value=Decimal('0.00'),
