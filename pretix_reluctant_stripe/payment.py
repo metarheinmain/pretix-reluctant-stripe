@@ -75,7 +75,7 @@ class ReluctantStripeCC(StripeCC):
     def payment_prepare(self, request, payment):
         from .signals import get_fee
 
-        payment.order.fees.filter(fee_type=OrderFee.FEE_TYPE_PAYMENT).delete()
+        payment.order.fees.filter(fee_type=OrderFee.FEE_TYPE_SERVICE, internal_type="stripe").delete()
         if request.POST.get('payment_stripe_cc_reluctant-pay_fees', 'no') == 'yes':
             try:
                 fee = get_fee(self.event, payment.order.total, payment.order.invoice_address)
